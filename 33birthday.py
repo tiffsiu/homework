@@ -15,21 +15,22 @@
 
 import random
 
-people = 25
-trial = 100
+people = 23
+trial = 10000
 sharedbirthdays = 0
 daysincalendar = 365
-calendar = []
-for i in range(daysincalendar): 
-    calendar.append(0)
+calendar = [] #create empty list
 for i in range(trial):
+    calendar = []
+    for i in range(daysincalendar):
+        calendar.append(0)
     for j in range(people):
         ran = random.randint(0, daysincalendar-1)
-    calendar[ran] += 1
-for i in calendar:
-    if i > 1:
-        sharedbirthdays += 1
-        break
+        calendar[ran] += 1
+    for i in calendar:
+        if i > 1:
+            sharedbirthdays += 1
+            break
 print(f'{sharedbirthdays/trial:.3f}')
 #print(calendar)
 """
