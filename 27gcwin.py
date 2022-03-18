@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import sys
 # Write a program that computes the GC fraction of a DNA sequence in a window
 # Window size is 11 nt
 # Output with 4 significant figures using whichever method you prefer
@@ -10,39 +10,22 @@
 
 seq = 'ACGACGCAGGAGGAGAGTTTCAGAGATCACGAATACATCCATATTACCCAGAGAGAG'
 w = 11
-
-for i in range(0, len(seq)-w+1):
-	total = 0
-	print(i, seq[i:i+w], end =' ')
-	if seq[i] == 'C' or seq[i] == 'G': total +=1
-	if seq[i+1] == 'C' or seq[i+1] == 'G': total +=1
-	if seq[i+2] == 'C' or seq[i+2] == 'G': total +=1
-	if seq[i+3] == 'C' or seq[i+3] == 'G': total +=1
-	if seq[i+4] == 'C' or seq[i+4] == 'G': total +=1
-	if seq[i+5] == 'C' or seq[i+5] == 'G': total +=1
-	if seq[i+6] == 'C' or seq[i+6] == 'G': total +=1
-	if seq[i+7] == 'C' or seq[i+7] == 'G': total +=1
-	if seq[i+8] == 'C' or seq[i+8] == 'G': total +=1
-	if seq[i+9] == 'C' or seq[i+9] == 'G': total +=1
-	if seq[i+10] == 'C' or seq[i+10] == 'G': total +=1
-	
-	print(f'{total/w:.4f}')
-
-gc = 0    
-
+gccount = 0
 for i in range(w):
-	if seq[i] == 'G' or seq[i] == 'C': gc += 1
-print(0, seq[i:i+w], gc/w)
+    if seq[i] == 'C' or seq[i] == 'G' : gccount += 1	
 
-for i in range(0, len(seq) - w, 1):
-	off = seq[i]
-	on = seq[i + w]
-	if off == 'G' or off == "C": gc -= 1
-	if on  == 'G' or on  == "C": gc += 1
-	print(i + 1, seq[i:i + w], '%.4f' % (gc/w))
-    
-# this is copied from two classmates
-# trying to figure out how they did it
+print(f'0 {seq[:w]} {gccount/w:.4f}')
+
+for i in range(1, len(seq)-w+1):
+    if seq[i+w-1] == 'C' or seq[i+w-1] == 'G': gccount += 1
+    if seq[i-1] == 'C' or seq[i-1] == 'G': gccount -= 1
+    print(f'{i} {seq[i:i+w]} {gccount/w:.4f}')
+ 
+#nested loops can count the same position in each window as it goes down the sequence
+#we were able to only look for the beginning letter and the last letter of each sequence 
+#to see if it were a C or G to do a gc count
+#the first one, we gave it a range of the window size and it looks at each position 
+#within the window to count C and G but it would not go through the entire sequence
 
 """
 python3 27gcwin.py
